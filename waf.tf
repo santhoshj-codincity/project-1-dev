@@ -44,7 +44,7 @@ resource "aws_api_gateway_stage" "example" {
 
 #creating webacl and rule
 resource "aws_wafv2_web_acl" "example" {
-  name  = "web-acl-association-example"
+  name  = "web-acl-association-pictory"
   scope = "REGIONAL"
 
   default_action {

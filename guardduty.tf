@@ -77,7 +77,7 @@ resource "aws_guardduty_detector" "test_gd" {
 }
 
 resource "aws_s3_bucket" "gd_bucket" {
-  bucket        = "guardduty-9600"
+  bucket        = "pictory-guardduty"
   force_destroy = true
 }
 

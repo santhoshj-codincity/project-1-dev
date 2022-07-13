@@ -1,0 +1,76 @@
+resource "aws_api_gateway_rest_api" "ApiGatewayRestApi" {
+    name = "picterra-api-gw"
+    api_key_source = "HEADER"
+    endpoint_configuration {
+        types = [
+            "EDGE"
+        ]
+    }
+}
+
+resource "aws_api_gateway_stage" "ApiGatewayStage" {
+    stage_name = "stage1"
+    deployment_id = "pyt6ke"
+    rest_api_id = "3fqrnqw5v6"
+    cache_cluster_enabled = false
+    xray_tracing_enabled = false
+}
+
+resource "aws_api_gateway_deployment" "ApiGatewayDeployment" {
+    rest_api_id = "3fqrnqw5v6"
+}
+
+resource "aws_api_gateway_resource" "ApiGatewayResource" {
+    rest_api_id = "3fqrnqw5v6"
+    path_part = "test-resource"
+    parent_id = "ceecckrd4b"
+}
+
+resource "aws_api_gateway_method" "ApiGatewayMethod" {
+    rest_api_id = "3fqrnqw5v6"
+    resource_id = "g6yrx5"
+    http_method = "GET"
+    authorization = "NONE"
+    api_key_required = false
+    request_models {
+        application/json = "Error"
+    }
+}
+
+resource "aws_api_gateway_model" "ApiGatewayModel" {
+    rest_api_id = "3fqrnqw5v6"
+    name = "Empty"
+    description = "This is a default empty schema model"
+    schema = <<EOF
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title" : "Empty Schema",
+  "type" : "object"
+}
+EOF
+    content_type = "application/json"
+}
+
+resource "aws_api_gateway_model" "ApiGatewayModel2" {
+    rest_api_id = "3fqrnqw5v6"
+    name = "Error"
+    description = "This is a default error schema model"
+    schema = <<EOF
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "title" : "Error Schema",
+  "type" : "object",
+  "properties" : {
+    "message" : { "type" : "string" }
+  }
+}
+EOF
+    content_type = "application/json"
+}
+
+resource "aws_api_gateway_vpc_link" "ApiGatewayVpcLink" {
+    name = "picterra-vpclink"
+    target_arns = [
+        "arn:aws:elasticloadbalancing:us-east-2:326581686134:loadbalancer/net/picterra-asg/d78c6c32ddd04a3c"
+    ]
+}
