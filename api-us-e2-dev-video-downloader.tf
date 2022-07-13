@@ -206,3 +206,5 @@ resource "aws_api_gateway_model" "ApiGatewayModel902" {
 EOF
     content_type = "application/json"
 }
+
+#===================================================
